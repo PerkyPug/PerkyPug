@@ -1,7 +1,5 @@
 package util;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,20 +16,6 @@ public class FileHandler {
     private String filename;
 
     //don't forget to handle the exceptions
-
-    public FileHandler(String directory, String filename){
-        this.directory = directory;
-        this.filename = filename;
-    }
-
-    public void writeToFile(List<String> contents) {
-        try {
-            Files.write(Paths.get(directory, filename), contents);
-        }
-        catch (IOException e) {
-            System.out.printf("Error: %s\n", e.getMessage());
-        }
-    }
 
     public static void main(String[] args) throws IOException{
 
