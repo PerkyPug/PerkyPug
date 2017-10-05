@@ -91,9 +91,11 @@ public class FileHandlerTest {
     public static void deleteContacts(FileHandler contactsFile, List<String> removeContact) throws IOException {
         Input input = new Input();
         String removeContactsName = input.getString("Search name to delete");
-        removeContact.removeIf(contact -> contact.contains(removeContactsName));
-        System.out.println("Removing: " + removeContactsName);
-        contactsFile.writeToFile(removeContact, false);
+        if (input.yesNo("Are you sure you want to delete this contact?")) {
+            removeContact.removeIf(contact -> contact.contains(removeContactsName));
+            System.out.println("Removing: " + removeContactsName);
+            contactsFile.writeToFile(removeContact, false);
+        }
     }
     
     
