@@ -18,7 +18,7 @@ public class FileHandlerTest {
         System.out.println("What would you like to do?\n" +
                 "\n" +
 //                "0 - exit\n" +
-                "1 - view contacts\n" +
+                "1 - View All contacts\n" +
                 "2 - Add a new contact\n" +
                 "3 - Search a contact by name\n" +
                 "4 - Delete an existing contact.\n" +
@@ -26,22 +26,28 @@ public class FileHandlerTest {
                 "Enter an option (1, 2, 3, 4 or 5):\n");
 
         int option = Integer.parseInt(scanner.nextLine());
-        int optionNum;
+        int optionNum = 0;
         switch (option) {
             case 1:
                 optionNum = 1;
-                System.out.println("view contacts = " + optionNum);
+                System.out.println("View All contacts = " + optionNum);
+                System.out.println("Name | " + "Phone number\n" + "---------------------------" );
                 printAllContacts(contactsFile);
                 break;
             case 2:
                 optionNum = 2;
                 addContacts(contactsFile);
                 break;
-            case 3:  optionNum = Integer.parseInt("March");
+            case 3:
+                optionNum = 3;
+                searchContacts(contactsFile);
                 break;
-            case 4:  optionNum = Integer.parseInt("April");
+            case 4:
+                optionNum = 4;
+                deleteContacts(contactsFile);
                 break;
-            case 5:  optionNum = Integer.parseInt("May");
+            case 5:
+                System.out.println(" Goodbye ");
                 break;
             default: optionNum = Integer.parseInt("Invalid month");
                 break;
@@ -69,4 +75,31 @@ public class FileHandlerTest {
         contactsFile.writeToFile(myContacts);
         printAllContacts(contactsFile);
     }
+
+    public static void searchContacts(FileHandler contactsFile) throws IOException {
+        Input input = new Input();
+        List<String> myContacts = contactsFile.readAllContents(); // read all the lines from a file
+        String myContactsName = input.getString("Search name");
+        for (String names: myContacts) {
+            if(names.contains(myContactsName)){
+            System.out.println(names);
+            }
+        }
+    }
+//
+    public static void deleteContacts(FileHandler contactsFile) throws IOException {
+        Input input = new Input();
+        List<String> removeContact = contactsFile.readAllContents(); // read all the lines from a file
+        String removeContactsName = input.getString("Search name to delete");
+        for (String names: removeContact) {
+            if(names.contains(removeContactsName)){
+//                removeContactsName
+                System.out.println(names);
+
+            }
+        }
+    }
+    
+    
+    
 }
