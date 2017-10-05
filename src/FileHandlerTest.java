@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class FileHandlerTest {
 
     public static void main(String[] args) throws IOException {
-        FileHandler contactsFile = new FileHandler("contacts", "contacts.txt");
+        FileHandler contactsFile = new FileHandler("contacts", "addContact.txt");
         Scanner scanner = new Scanner(System.in);
+        List<String> contacts = contactsFile.readAllContents(); // read all the lines from a file
 
 
 
@@ -44,7 +45,7 @@ public class FileHandlerTest {
                 break;
             case 4:
                 optionNum = 4;
-                deleteContacts(contactsFile);
+                deleteContacts(contactsFile, contacts);
                 break;
             case 5:
                 System.out.println(" Goodbye ");
@@ -72,7 +73,7 @@ public class FileHandlerTest {
         System.out.println("Enter contacts number here:");
         String phoneNumber = input.getString("");
         myContacts.add(myContactsName + "," + phoneNumber);
-        contactsFile.writeToFile(myContacts);
+        contactsFile.writeToFile(myContacts, true);
         printAllContacts(contactsFile);
     }
 
@@ -87,17 +88,12 @@ public class FileHandlerTest {
         }
     }
 //
-    public static void deleteContacts(FileHandler contactsFile) throws IOException {
+    public static void deleteContacts(FileHandler contactsFile, List<String> removeContact) throws IOException {
         Input input = new Input();
-        List<String> removeContact = contactsFile.readAllContents(); // read all the lines from a file
         String removeContactsName = input.getString("Search name to delete");
-        for (String names: removeContact) {
-            if(names.contains(removeContactsName)){
-//                removeContactsName
-                System.out.println(names);
-
-            }
-        }
+        removeContact.removeIf(contact -> contact.contains(removeContactsName));
+        System.out.println("Removing: " + removeContactsName);
+        contactsFile.writeToFile(removeContact, false);
     }
     
     
